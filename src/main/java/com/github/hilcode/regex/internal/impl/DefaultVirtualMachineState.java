@@ -30,17 +30,10 @@ public final class DefaultVirtualMachineState
 		implements
 			Builder
 	{
-		private final Thread.Builder threadBuilder;
-
-		public DefaultBuilder(final Thread.Builder threadBuilder)
-		{
-			this.threadBuilder = threadBuilder;
-		}
-
 		@Override
 		public VirtualMachineState newVirtualMachineState(final Program program)
 		{
-			return new DefaultVirtualMachineState(this.threadBuilder, program);
+			return new DefaultVirtualMachineState(program);
 		}
 	}
 
@@ -48,12 +41,12 @@ public final class DefaultVirtualMachineState
 
 	private List<Thread> newThreads;
 
-	public DefaultVirtualMachineState(final Thread.Builder threadBuilder, final Program program)
+	public DefaultVirtualMachineState(final Program program)
 	{
 		this.threads = newArrayList();
 		this.newThreads = newArrayList();
-		final Instruction firstInstruction = program.getFirstInstruction();
-		final Thread thread = threadBuilder.newThread(0, "");
+		final Instruction firstInstruction = program.instructions.get(0);
+		final Thread thread = new Thread(0, "");
 		if (firstInstruction instanceof Instruction.Start)
 		{
 			firstInstruction.execute(thread, this, -2);

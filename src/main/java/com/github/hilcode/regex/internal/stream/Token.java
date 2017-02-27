@@ -15,14 +15,15 @@
  */
 package com.github.hilcode.regex.internal.stream;
 
-public interface Token
+public final class Token
 {
-	public interface Builder
+	public Token(final TokenType type, final String text)
 	{
-		Token newToken(TokenType type, String text);
+		this.type = type;
+		this.text = text;
 	}
 
-	TokenType getType();
+	public final TokenType type;
 
-	String getText();
+	public final String text;
 }

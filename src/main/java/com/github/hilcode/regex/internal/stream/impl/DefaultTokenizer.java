@@ -41,18 +41,14 @@ public final class DefaultTokenizer
 		implements
 			Builder
 	{
-		private final Token.Builder tokenBuilder;
-
 		private final TokenizerState.Builder tokenizerStateBuilder;
 
 		private final Stream.Builder streamBuilder;
 
 		public DefaultBuilder(
-				final Token.Builder tokenBuilder,
 				final TokenizerState.Builder tokenizerStateBuilder,
 				final Stream.Builder streamBuilder)
 		{
-			this.tokenBuilder = tokenBuilder;
 			this.tokenizerStateBuilder = tokenizerStateBuilder;
 			this.streamBuilder = streamBuilder;
 		}
@@ -60,22 +56,18 @@ public final class DefaultTokenizer
 		@Override
 		public Tokenizer newTokenizer()
 		{
-			return new DefaultTokenizer(this.tokenBuilder, this.tokenizerStateBuilder, this.streamBuilder);
+			return new DefaultTokenizer(this.tokenizerStateBuilder, this.streamBuilder);
 		}
 	}
-
-	private final Token.Builder tokenBuilder;
 
 	private final TokenizerState.Builder tokenizerStateBuilder;
 
 	private final Stream.Builder streamBuilder;
 
 	public DefaultTokenizer(
-			final Token.Builder tokenBuilder,
 			final TokenizerState.Builder tokenizerStateBuilder,
 			final Stream.Builder streamBuilder)
 	{
-		this.tokenBuilder = tokenBuilder;
 		this.tokenizerStateBuilder = tokenizerStateBuilder;
 		this.streamBuilder = streamBuilder;
 	}
@@ -208,8 +200,7 @@ public final class DefaultTokenizer
 											{
 												matchedText.appendCodePoint(head6);
 												final String tokenText = matchedText.toString();
-												final Token token;
-												token = this.tokenBuilder.newToken(UNICODE_CODE_POINT, tokenText);
+												final Token token = new Token(UNICODE_CODE_POINT, tokenText);
 												return this.tokenizerStateBuilder.newTokenizerState(
 														codePointStream6.tail(),
 														token);
@@ -235,7 +226,7 @@ public final class DefaultTokenizer
 			final String tokenText = new String(toChars(codePointStream.head()));
 			return this.tokenizerStateBuilder.newTokenizerState(
 					codePointStream.tail(),
-					this.tokenBuilder.newToken(CODE_POINT, tokenText));
+					new Token(CODE_POINT, tokenText));
 		}
 		return this.tokenizerStateBuilder.newTokenizerState(codePointStream);
 	}
@@ -248,7 +239,7 @@ public final class DefaultTokenizer
 	{
 		if (!codePointStream.isEmpty() && codePointStream.head() == codePoint)
 		{
-			final Token token = this.tokenBuilder.newToken(tokenType, new String(toChars(codePoint)));
+			final Token token = new Token(tokenType, new String(toChars(codePoint)));
 			return this.tokenizerStateBuilder.newTokenizerState(codePointStream.tail(), token);
 		}
 		return this.tokenizerStateBuilder.newTokenizerState(codePointStream);

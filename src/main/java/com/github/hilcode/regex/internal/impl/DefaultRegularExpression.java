@@ -122,7 +122,7 @@ public final class DefaultRegularExpression
 		this.basicJumpBuilder = basicJumpBuilder;
 		final Tokenizer tokenizer = tokenizerBuilder.newTokenizer();
 		final Stream<Token> tokens = tokenizer.tokenize(pattern);
-		final Deque<List<BasicInstruction>> deque = new ArrayDeque<List<BasicInstruction>>();
+		final Deque<List<BasicInstruction>> deque = new ArrayDeque<>();
 		final Stream<Token> tokensLeft = matchExpression(0, tokens, deque);
 		checkState(tokensLeft.isEmpty());
 		final List<BasicInstruction> basicInstructions = deque.pop();
@@ -154,11 +154,11 @@ public final class DefaultRegularExpression
 		while (!tokens_.isEmpty())
 		{
 			final Token token = tokens_.head();
-			switch (token.getType())
+			switch (token.type)
 			{
 				case CODE_POINT:
 				{
-					final int codePoint = token.getText().codePointAt(0);
+					final int codePoint = token.text.codePointAt(0);
 					BasicInstruction.Matcher.CodePoint basicCodePoint;
 					basicCodePoint = this.basicCodePointBuilder.newBasicCodePoint(codePoint);
 					final List<BasicInstruction> expression = newArrayList();
@@ -168,7 +168,7 @@ public final class DefaultRegularExpression
 				}
 				case UNICODE_CODE_POINT:
 				{
-					final String hexCodePoint = token.getText().substring(2);
+					final String hexCodePoint = token.text.substring(2);
 					final int codePoint = Integer.parseInt(hexCodePoint, 16);
 					BasicInstruction.Matcher.CodePoint basicCodePoint;
 					basicCodePoint = this.basicCodePointBuilder.newBasicCodePoint(codePoint);
@@ -207,11 +207,11 @@ public final class DefaultRegularExpression
 				}
 				case OPEN_PARENTHESIS:
 				{
-					final Deque<List<BasicInstruction>> stack_ = new ArrayDeque<List<BasicInstruction>>();
+					final Deque<List<BasicInstruction>> stack_ = new ArrayDeque<>();
 					tokens_ = matchExpression(level + 1, tokens_.tail(), stack_);
 					deque.add(stack_.pop());
 					checkState(stack_.isEmpty());
-					if (!tokens_.isEmpty() && tokens_.head().getType() == CLOSE_PARENTHESIS)
+					if (!tokens_.isEmpty() && tokens_.head().type == CLOSE_PARENTHESIS)
 					{
 						break;
 					}
@@ -220,7 +220,7 @@ public final class DefaultRegularExpression
 						throw new IllegalStateException("Expected a ')'.");
 					}
 				}
-				default:// case CLOSE_PARENTHESIS:
+				case CLOSE_PARENTHESIS:
 				{
 					if (level == 0)
 					{

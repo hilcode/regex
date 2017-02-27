@@ -29,8 +29,8 @@ public final class Main
 		final int codePoint = 0x1F000;
 		final char[] chars = toChars(codePoint);
 		final String tile = copyValueOf(chars);
-		final String pattern = "(a?" + tile + ")+\\u12Afc*";
-		//final String pattern = "a*";
+		//final String pattern = "(a?" + tile + ")+\\u12Afc*";
+		final String pattern = "a*";
 		//final String pattern = "(\n|\n\r)|(abc)|(xyz)";
 		final RegularExpression regularExpression = regularExpressionBuilder.newRegularExpression(pattern);
 		System.out.println(regularExpression.match("a").matches());

@@ -15,18 +15,24 @@
  */
 package com.github.hilcode.regex.internal;
 
+import static java.lang.String.format;
 import java.util.List;
+import com.google.common.collect.ImmutableList;
 
-public interface Program
+public final class Program
 {
-	public interface Builder
+	public final ImmutableList<Instruction> instructions;
+
+	public Program(final List<Instruction> instructions)
 	{
-		Program newProgram(List<Instruction> instructions);
+		this.instructions = ImmutableList.copyOf(instructions);
 	}
 
-	Instruction getFirstInstruction();
-
-	Instruction get(final int index);
-
-	void print();
+	public void print()
+	{
+		for (int i = 0; i < this.instructions.size(); i++)
+		{
+			System.out.println(format("%3d %s", Integer.valueOf(i), this.instructions.get(i)));
+		}
+	}
 }

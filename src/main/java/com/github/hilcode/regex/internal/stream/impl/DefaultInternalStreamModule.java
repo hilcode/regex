@@ -21,7 +21,6 @@ import com.github.hilcode.regex.internal.stream.CodePointStream;
 import com.github.hilcode.regex.internal.stream.CodeUnitReader;
 import com.github.hilcode.regex.internal.stream.InternalStreamModule;
 import com.github.hilcode.regex.internal.stream.Stream;
-import com.github.hilcode.regex.internal.stream.Token;
 import com.github.hilcode.regex.internal.stream.Tokenizer;
 import com.github.hilcode.regex.internal.stream.TokenizerState;
 
@@ -85,22 +84,12 @@ public final class DefaultInternalStreamModule
 		}
 	}
 
-	private static final class LazyTokenBuilder
-	{
-		public static final Token.Builder INSTANCE;
-		static
-		{
-			INSTANCE = new DefaultToken.DefaultBuilder();
-		}
-	}
-
 	private static final class LazyTokenizerBuilder
 	{
 		public static final Tokenizer.Builder INSTANCE;
 		static
 		{
 			INSTANCE = new DefaultTokenizer.DefaultBuilder(
-					LazyTokenBuilder.INSTANCE,
 					LazyTokenizerStateBuilder.INSTANCE,
 					LazyInternalStreamModule.INSTANCE.provideStreamBuilder());
 		}
@@ -110,12 +99,6 @@ public final class DefaultInternalStreamModule
 	public TokenizerState.Builder provideTokenizerStateBuilder()
 	{
 		return LazyTokenizerStateBuilder.INSTANCE;
-	}
-
-	@Override
-	public Token.Builder provideTokenBuilder()
-	{
-		return LazyTokenBuilder.INSTANCE;
 	}
 
 	@Override

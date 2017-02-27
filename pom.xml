@@ -45,9 +45,27 @@
 
 		<!-- Scope 'compile' -->
 		<dependency>
+			<groupId>com.github.jbellis</groupId>
+			<artifactId>jamm</artifactId>
+			<version>0.3.1</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.javaslang</groupId>
+			<artifactId>javaslang</artifactId>
+			<version>2.0.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.roaringbitmap</groupId>
+			<artifactId>RoaringBitmap</artifactId>
+			<version>0.6.41</version>
 		</dependency>
 
 		<!-- Scope 'test' -->
@@ -55,6 +73,14 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.functionaljava</groupId>
+			<artifactId>functionaljava-quickcheck</artifactId>
+			<version>4.6</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
@@ -88,8 +114,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${maven-compiler-plugin.version}</version>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>1.8</source>
+						<target>1.8</target>
 						<compilerArgument>-Xlint:all,-processing</compilerArgument>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>

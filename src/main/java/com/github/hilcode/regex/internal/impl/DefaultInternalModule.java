@@ -20,9 +20,7 @@ import com.github.hilcode.regex.internal.BasicInstruction;
 import com.github.hilcode.regex.internal.BasicProgram;
 import com.github.hilcode.regex.internal.Instruction;
 import com.github.hilcode.regex.internal.InternalModule;
-import com.github.hilcode.regex.internal.Program;
 import com.github.hilcode.regex.internal.RegularExpression;
-import com.github.hilcode.regex.internal.Thread;
 import com.github.hilcode.regex.internal.VirtualMachine;
 import com.github.hilcode.regex.internal.VirtualMachineState;
 import com.github.hilcode.regex.internal.stream.InternalStreamModule;
@@ -94,15 +92,6 @@ public final class DefaultInternalModule
 		}
 	}
 
-	private static final class LazyProgramBuilder
-	{
-		public static final Program.Builder INSTANCE;
-		static
-		{
-			INSTANCE = new DefaultProgram.DefaultBuilder();
-		}
-	}
-
 	private static final class LazyInstructionStartBuilder
 	{
 		public static final Instruction.Start.Builder INSTANCE;
@@ -118,7 +107,6 @@ public final class DefaultInternalModule
 		static
 		{
 			INSTANCE = new DefaultBasicProgram.DefaultBuilder(
-					LazyProgramBuilder.INSTANCE,
 					LazyInstructionStartBuilder.INSTANCE);
 		}
 	}
@@ -140,21 +128,12 @@ public final class DefaultInternalModule
 		}
 	}
 
-	private static final class LazyThreadBuilder
-	{
-		public static final Thread.Builder INSTANCE;
-		static
-		{
-			INSTANCE = new DefaultThread.DefaultBuilder();
-		}
-	}
-
 	private static final class LazyStateBuilder
 	{
 		public static final VirtualMachineState.Builder INSTANCE;
 		static
 		{
-			INSTANCE = new DefaultVirtualMachineState.DefaultBuilder(LazyThreadBuilder.INSTANCE);
+			INSTANCE = new DefaultVirtualMachineState.DefaultBuilder();
 		}
 	}
 

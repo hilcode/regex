@@ -34,26 +34,26 @@ public final class DefaultBasicProgram
 		implements
 			Builder
 	{
-		private final Program.Builder programBuilder;
+		
 
 		private final Instruction.Start.Builder instructionStartBuilder;
 
 		public DefaultBuilder(
-				final Program.Builder programBuilder,
+		
 				final Instruction.Start.Builder instructionStartBuilder)
 		{
-			this.programBuilder = programBuilder;
+		
 			this.instructionStartBuilder = instructionStartBuilder;
 		}
 
 		@Override
 		public BasicProgram newBasicProgram(final List<BasicInstruction> basicInstructions)
 		{
-			return new DefaultBasicProgram(this.programBuilder, this.instructionStartBuilder, basicInstructions);
+			return new DefaultBasicProgram(this.instructionStartBuilder, basicInstructions);
 		}
 	}
 
-	private final Program.Builder programBuilder;
+	
 
 	private final Instruction.Start.Builder instructionStartBuilder;
 
@@ -62,11 +62,11 @@ public final class DefaultBasicProgram
 	private final List<BitSet> allNextProgramCounters;
 
 	public DefaultBasicProgram(
-			final Program.Builder programBuilder,
+	
 			final Instruction.Start.Builder instructionStartBuilder,
 			final List<BasicInstruction> basicInstructions)
 	{
-		this.programBuilder = programBuilder;
+	
 		this.instructionStartBuilder = instructionStartBuilder;
 		this.basicInstructions = basicInstructions;
 		this.allNextProgramCounters = newArrayListWithCapacity(basicInstructions.size());
@@ -133,7 +133,7 @@ public final class DefaultBasicProgram
 			}
 			mappedInstructions.add(instruction.mapProgramCounters(indexMap));
 		}
-		return this.programBuilder.newProgram(mappedInstructions);
+		return new Program(mappedInstructions);
 	}
 
 	@Override

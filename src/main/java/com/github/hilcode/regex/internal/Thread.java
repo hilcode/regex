@@ -15,16 +15,49 @@
  */
 package com.github.hilcode.regex.internal;
 
-public interface Thread
+import static java.lang.Character.toChars;
+
+public final class Thread
 {
-	public interface Builder
+	public final int programCounter;
+
+	public final String matchedText;
+
+	public Thread(final int programCounter, final String matchedText)
 	{
-		Thread newThread(int programCounter, final String matchedText);
+		this.programCounter = programCounter;
+		this.matchedText = matchedText;
 	}
 
-	Thread match(int programCounter, int matchedCodePoint);
+	public Thread match(final int nextProgramCounter, final int matchedCodePoint)
+	{
+		return new Thread(nextProgramCounter, this.matchedText + new String(toChars(matchedCodePoint)));
+	}
 
-	Thread jump(int programCounter);
+	public Thread jump(final int nextProgramCounter)
+	{
+		return new Thread(nextProgramCounter, this.matchedText);
+	}
 
-	int getProgramCounter();
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		return prime + this.programCounter;
+	}
+
+	@Override
+	public boolean equals(final Object object)
+	{
+		if (this == object)
+		{
+			return true;
+		}
+		if (object == null || getClass() != object.getClass())
+		{
+			return false;
+		}
+		final Thread otherThread = (Thread) object;
+		return this.programCounter == otherThread.programCounter;
+	}
 }

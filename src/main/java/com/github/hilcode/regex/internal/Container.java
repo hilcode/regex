@@ -24,7 +24,6 @@ import com.github.hilcode.regex.internal.stream.CodePointStream;
 import com.github.hilcode.regex.internal.stream.CodeUnitReader;
 import com.github.hilcode.regex.internal.stream.InternalStreamModule;
 import com.github.hilcode.regex.internal.stream.Stream;
-import com.github.hilcode.regex.internal.stream.Token;
 import com.github.hilcode.regex.internal.stream.Tokenizer;
 import com.github.hilcode.regex.internal.stream.TokenizerState;
 
@@ -138,12 +137,6 @@ public final class Container
 	public TokenizerState.Builder provideTokenizerStateBuilder()
 	{
 		return INTERNAL_STREAM_MODULE.provideTokenizerStateBuilder();
-	}
-
-	@Override
-	public Token.Builder provideTokenBuilder()
-	{
-		return INTERNAL_STREAM_MODULE.provideTokenBuilder();
 	}
 
 	@Override

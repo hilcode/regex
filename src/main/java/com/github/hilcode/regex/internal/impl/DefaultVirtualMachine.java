@@ -69,8 +69,8 @@ public final class DefaultVirtualMachine
 				{
 					final Thread thread = state.getThread(index);
 					index++;
-					final int threadProgramCounter = thread.getProgramCounter();
-					final Instruction instruction = program.get(threadProgramCounter);
+					final int threadProgramCounter = thread.programCounter;
+					final Instruction instruction = program.instructions.get(threadProgramCounter);
 					if (instruction.execute(thread, state, nextCodePoint))
 					{
 						return new Match(codePointStream_, thread.toString());

@@ -27,7 +27,5 @@ public interface InternalStreamModule
 
 	TokenizerState.Builder provideTokenizerStateBuilder();
 
-	Token.Builder provideTokenBuilder();
-
 	Tokenizer.Builder provideTokenizerBuilder();
 }

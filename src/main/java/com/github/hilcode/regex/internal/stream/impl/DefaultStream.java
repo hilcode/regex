@@ -29,7 +29,7 @@ public final class DefaultStream<T>
 		@Override
 		public <E> Stream<E> newStream(final Iterator<E> elements)
 		{
-			return new DefaultStream<E>(elements);
+			return new DefaultStream<>(elements);
 		}
 	}
 
@@ -102,7 +102,7 @@ public final class DefaultStream<T>
 			else
 			{
 				initHead();
-				this.tail = new DefaultStream<T>(this.elements);
+				this.tail = new DefaultStream<>(this.elements);
 			}
 			return this.tail;
 		}
