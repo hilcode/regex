@@ -17,15 +17,9 @@ package com.github.hilcode.text;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.github.hilcode.text.example.Thing;
 
 public class TextBuilder<T>
 {
-	public static final void main(final String[] args)
-	{
-		System.out.println(new Thing("Hello world!", (short) 1000, true));
-	}
-
 	private final Class<? extends T> type;
 
 	private final List<KeyValue<T>> properties;
