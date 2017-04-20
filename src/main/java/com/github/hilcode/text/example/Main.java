@@ -19,6 +19,7 @@ public final class Main
 {
 	public static final void main(final String[] args)
 	{
-		System.out.println(new Thing("Hello world!", (short) 1000, true));
+		final Thing thing = new Thing("Hello world!", (short) 1000, true);
+		System.out.println(thing);
 	}
 }

@@ -40,66 +40,10 @@ public final class Thing
 	@Override
 	public String toString()
 	{
-		final ValueMapper valueMapper_ = new ValueMapper()
-		{
-			@Override
-			public <T> String mapValue(final T value)
-			{
-				return String.valueOf(value);
-			}
-
-			@Override
-			public String mapValue(final boolean value)
-			{
-				return Boolean.toString(value);
-			}
-
-			@Override
-			public String mapValue(final char value)
-			{
-				return Character.toString(value);
-			}
-
-			@Override
-			public String mapValue(final byte value)
-			{
-				return Byte.toString(value);
-			}
-
-			@Override
-			public String mapValue(final short value)
-			{
-				return Short.toString(value);
-			}
-
-			@Override
-			public String mapValue(final int value)
-			{
-				return Integer.toString(value);
-			}
-
-			@Override
-			public String mapValue(final long value)
-			{
-				return Long.toString(value);
-			}
-
-			@Override
-			public String mapValue(final float value)
-			{
-				return Float.toString(value);
-			}
-
-			@Override
-			public String mapValue(final double value)
-			{
-				return Double.toString(value);
-			}
-		};
 		return new TextBuilder<Thing>(getClass())
 				.add("name", (valueMapper, instance) -> valueMapper.mapValue(instance.name))
 				.add("someNumber", (valueMapper, instance) -> valueMapper.mapValue(instance.someNumber))
 				.add("flag", (valueMapper, instance) -> valueMapper.mapValue(instance.flag))
-				.toString(TextBuilderStrategy.DEFAULT, valueMapper_, this);
+				.toString(TextBuilderStrategy.DEFAULT, ValueMapper.DEFAULT, this);
 	}
 }

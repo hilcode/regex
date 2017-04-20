@@ -17,6 +17,63 @@ package com.github.hilcode.text;
 
 public interface ValueMapper
 {
+	ValueMapper DEFAULT = new ValueMapper()
+	{
+		@Override
+		public <T> String mapValue(final T value)
+		{
+			return String.valueOf(value);
+		}
+
+		@Override
+		public String mapValue(final boolean value)
+		{
+			return Boolean.toString(value);
+		}
+
+		@Override
+		public String mapValue(final char value)
+		{
+			return Character.toString(value);
+		}
+
+		@Override
+		public String mapValue(final byte value)
+		{
+			return Byte.toString(value);
+		}
+
+		@Override
+		public String mapValue(final short value)
+		{
+			return Short.toString(value);
+		}
+
+		@Override
+		public String mapValue(final int value)
+		{
+			return Integer.toString(value);
+		}
+
+		@Override
+		public String mapValue(final long value)
+		{
+			return Long.toString(value);
+		}
+
+		@Override
+		public String mapValue(final float value)
+		{
+			return Float.toString(value);
+		}
+
+		@Override
+		public String mapValue(final double value)
+		{
+			return Double.toString(value);
+		}
+	};
+
 	<T> String mapValue(T value);
 
 	String mapValue(boolean value);
