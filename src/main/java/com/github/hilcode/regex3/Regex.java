@@ -18,7 +18,9 @@ package com.github.hilcode.regex3;
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import com.google.common.base.Optional;
+import com.google.common.base.Verify;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
@@ -240,6 +242,12 @@ public final class Regex
 		return vm.run(new CodePointSourceString(text));
 	}
 
+	public String generate(final Random rnd)
+	{
+		final VirtualMachine vm = new VirtualMachine(this.program);
+		return vm.generate(rnd);
+	}
+
 	public static final class VmThread
 	{
 		public final int programCounter;
@@ -257,6 +265,63 @@ public final class Regex
 		public VirtualMachine(final ImmutableList<Instruction> program)
 		{
 			this.program = program;
+		}
+
+		public String generate(final Random rnd)
+		{
+			final StringBuilder text = new StringBuilder();
+			int pc = 0;
+			while (true)
+			{
+				final Instruction instruction = this.program.get(pc);
+				switch (instruction.type)
+				{
+					case SINGLE:
+					{
+						final Instruction.Single single = instruction.cast();
+						text.appendCodePoint(single.codePoint.value);
+						pc++;
+						break;
+					}
+					case RANGE:
+					{
+						final Instruction.Range range = instruction.cast();
+						final BitSet bits = range.codePoints.value;
+						Verify.verify(bits.cardinality() > 0, "Invalid cardinality.");
+						int bitNo = rnd.nextInt(bits.cardinality());
+						int currentBit = bits.nextSetBit(0);
+						while (true)
+						{
+							if (bitNo == 0)
+							{
+								text.appendCodePoint(currentBit);
+								break;
+							}
+							currentBit = bits.nextSetBit(currentBit + 1);
+							bitNo--;
+						}
+						pc++;
+						break;
+					}
+					case SUCCESS:
+					{
+						return text.toString();
+					}
+					case FORK:
+					{
+						final Instruction.Fork fork = instruction.cast();
+						pc += rnd.nextBoolean() ? 1 : fork.offset;
+						break;
+					}
+					case JUMP:
+					default:
+					{
+						final Instruction.Jump jump = instruction.cast();
+						pc += jump.offset;
+						break;
+					}
+				}
+			}
 		}
 
 		public Optional<String> run(final CodePointSource source)

@@ -22,6 +22,7 @@ import static com.github.hilcode.regex3.Regex.firstOf;
 import static com.github.hilcode.regex3.Regex.optional;
 import static com.github.hilcode.regex3.Regex.text;
 import static com.github.hilcode.regex3.Regex.zeroOrMore;
+import java.util.Random;
 
 public class Main
 {
@@ -83,6 +84,7 @@ public class Main
 					text("%^&&***"))
 							.build();
 			System.out.println(regex.match("bc"));
+			System.out.println(regex.generate(new Random()));
 		}
 		System.out.println("#####");
 		{
