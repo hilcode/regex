@@ -17,5 +17,5 @@ package com.github.hilcode.text;
 
 public interface Getter<T>
 {
-	String apply(ValueMapper toText, T instance);
+	String apply(ValueMapper valueMapper, T instance);
 }

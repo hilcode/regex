@@ -18,7 +18,7 @@ package com.github.hilcode.text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextBuilder<T>
+public final class TextBuilder<T>
 {
 	private final Class<? extends T> type;
 
@@ -36,16 +36,23 @@ public class TextBuilder<T>
 		return this;
 	}
 
-	public String toString(final ValueMapper toText, final T instance)
+	public String toString(final TextBuilderStrategy strategy, final ValueMapper toText, final T instance)
 	{
 		final StringBuilder sb = new StringBuilder();
-		sb.append('(');
-		sb.append(this.type.getSimpleName());
+		sb.append(strategy.onPreStart());
+		sb.append(strategy.onStart());
+		sb.append(strategy.onPostStart());
+		sb.append(strategy.onType(this.type.getSimpleName()));
+		sb.append(strategy.onPostType());
 		for (final KeyValue<T> keyValue : this.properties)
 		{
-			sb.append(' ').append(keyValue.name).append("=").append(keyValue.getter.apply(toText, instance));
+			sb.append(strategy.onPreField());
+			sb.append(strategy.onField(toText, instance, keyValue));
+			sb.append(strategy.onPostField());
 		}
-		sb.append(')');
+		sb.append(strategy.onPreFinish());
+		sb.append(strategy.onFinish());
+		sb.append(strategy.onPostFinish());
 		return sb.toString();
 	}
 }

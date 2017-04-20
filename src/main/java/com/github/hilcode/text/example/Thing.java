@@ -16,6 +16,7 @@
 package com.github.hilcode.text.example;
 
 import com.github.hilcode.text.TextBuilder;
+import com.github.hilcode.text.TextBuilderStrategy;
 import com.github.hilcode.text.ValueMapper;
 
 public final class Thing
@@ -99,6 +100,6 @@ public final class Thing
 				.add("name", (valueMapper, instance) -> valueMapper.mapValue(instance.name))
 				.add("someNumber", (valueMapper, instance) -> valueMapper.mapValue(instance.someNumber))
 				.add("flag", (valueMapper, instance) -> valueMapper.mapValue(instance.flag))
-				.toString(valueMapper_, this);
+				.toString(TextBuilderStrategy.DEFAULT, valueMapper_, this);
 	}
 }
